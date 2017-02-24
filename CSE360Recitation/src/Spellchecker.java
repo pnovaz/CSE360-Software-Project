@@ -7,6 +7,20 @@
 
 import java.io.*;
 import java.util.*;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.JScrollBar;
+import java.awt.Color;
+import javax.swing.JScrollPane;
+import java.awt.Font;
+import javax.swing.JList;
 
 public class Spellchecker {
 	
@@ -43,9 +57,9 @@ public class Spellchecker {
 	public static void readFilesToSet(HashSet<String> inputWords, InputStream inputFile){
 		int content;
 		
-		while((content = inputFile.read()) != -1){
+		/*while((content = inputFile.read()) != -1){
 			//inputWords.add(content);
-		}
+		}*/
 	}
 	
 }

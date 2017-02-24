@@ -1,10 +1,11 @@
+import javax.swing.DefaultListModel;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 
 public class OpenFile {
 	//declare variable
-	JFileChooser fileChooser = new JFileChooser();
-	StringBuilder sb = new StringBuilder();
+	private JFileChooser fileChooser = new JFileChooser();
+	public DefaultListModel<String> sb = new DefaultListModel<>();
 	
 	public void PickMe() throws Exception{
 		//if you choose a file..
@@ -18,14 +19,12 @@ public class OpenFile {
 			
 		//read text from file
 			while(input.hasNext()){
-				sb.append(input.nextLine());
-				sb.append("\n");
-			
+				sb.addElement(input.nextLine());
 			}
 			input.close(); //close file after reading
 		}
 		else{
-			sb.append("No file was selected");
+			sb.addElement("No file was selected");
 		}
 	}
 			

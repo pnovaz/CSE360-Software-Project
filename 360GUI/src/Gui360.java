@@ -92,15 +92,15 @@ public class Gui360 {
 		scrollPane1.setBounds(21, 47, 184, 280);
 		frame.getContentPane().add(scrollPane1);
 		
-		JTextArea textArea1 = new JTextArea();
-		scrollPane1.setViewportView(textArea1);
+		JList <String> list = new JList<>();
+		scrollPane1.setViewportView(list);
 		
 		JScrollPane scrollPane2 = new JScrollPane();
 		scrollPane2.setBounds(230, 47, 184, 280);
 		frame.getContentPane().add(scrollPane2);
 		
-		JTextArea textArea2 = new JTextArea();
-		scrollPane2.setViewportView(textArea2);
+		JList list2 = new JList();
+		scrollPane2.setViewportView(list2);
 		
 		JButton btnIgnore = new JButton("Ignore Word");
 		btnIgnore.setFont(new Font("Lucida Sans", Font.BOLD, 12));
@@ -126,9 +126,31 @@ public class Gui360 {
 				catch (Exception e){
 					e.printStackTrace();
 				}
-				textArea1.setText(of.sb.toString());
+				//System.out.println(o);
+				list.setModel(of.sb);
+			}
+			
+		
+		});
+		
+		btnDictionaryFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent argo0){
+				
+				OpenFile of = new OpenFile();
+				
+				try{
+					of.PickMe();
+				
+				}
+				catch (Exception e){
+					e.printStackTrace();
+				}
+				//System.out.println(o);
+				list2.setModel(of.sb);
 			}
 		});
+		
+
 		}	
 }
 			
