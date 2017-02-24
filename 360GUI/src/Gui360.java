@@ -122,10 +122,15 @@ public class Gui360 {
 				try{
 					of.PickMe();
 				
+<<<<<<< HEAD
+				
+=======
+>>>>>>> 6d7014c4e1ddb207abef89c6f72f477f20dcddf5
 				}
 				catch (Exception e){
 					e.printStackTrace();
 				}
+<<<<<<< HEAD
 				//System.out.println(o);
 				list.setModel(of.sb);
 			}
@@ -151,6 +156,32 @@ public class Gui360 {
 		});
 		
 
+=======
+<<<<<<< HEAD
+				System.out.println(of.returnS(0));
+				textArea1.setText(of.sb.toString());
+			}
+		});
+		
+		btn AddAllWords.addACtionListener(new ActonListener() {
+			public void actionPerformed(ActionEvent event){
+				//When you click the Add All Words button, it adds all of the words from the input file into the dictionary file
+				
+				
+			}
+		});
+		
+		btn AddWord.addActionListener(new Action Listener() {
+			public void actonPerformed(ActionEvent event)  {
+				
+			}
+		});
+=======
+				textArea1.setText(of.sb.toString());
+			}
+		});
+>>>>>>> 6d7014c4e1ddb207abef89c6f72f477f20dcddf5
+>>>>>>> 5f45e91fe2f0e5e4510eb68130d4a6e981b467fd
 		}	
 }
 			
