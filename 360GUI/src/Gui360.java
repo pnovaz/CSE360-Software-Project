@@ -122,11 +122,15 @@ public class Gui360 {
 				try{
 					of.PickMe();
 				
+<<<<<<< HEAD
 				
+=======
+>>>>>>> 6d7014c4e1ddb207abef89c6f72f477f20dcddf5
 				}
 				catch (Exception e){
 					e.printStackTrace();
 				}
+<<<<<<< HEAD
 				System.out.println(of.returnS(0));
 				textArea1.setText(of.sb.toString());
 			}
@@ -145,6 +149,11 @@ public class Gui360 {
 				
 			}
 		});
+=======
+				textArea1.setText(of.sb.toString());
+			}
+		});
+>>>>>>> 6d7014c4e1ddb207abef89c6f72f477f20dcddf5
 		}	
 }
 			
