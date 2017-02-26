@@ -257,8 +257,4 @@ public class Spellchecker {
 		});
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b2e51fb5c714a280c936fdaa76294d97e5c04bd2
