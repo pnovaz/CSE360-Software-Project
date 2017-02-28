@@ -183,10 +183,13 @@ public class Spellchecker {
 				
 				try{
 					PickMe("input", inputWords);
+					ListUnknownWords(inputWords, dictionary, undocumentedWords);
 				}
 				catch (Exception e){
 					e.printStackTrace();
 				}
+				list2.setModel(convertToListModel(dictionary));
+				list.setModel(convertToListModel(undocumentedWords));
 			}
 			
 		
