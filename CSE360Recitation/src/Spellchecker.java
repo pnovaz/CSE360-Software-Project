@@ -8,29 +8,17 @@
 //all necessary packages are imported here 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
-import javax.swing.ListModel;
-
 import java.awt.Color;
-
-import javax.swing.JScrollPane;
 
 import java.awt.Font;
 
-import javax.swing.JList;
-import javax.swing.DefaultListModel;
-
 import java.util.*;
-
-import javax.swing.JFileChooser;
 
 import java.io.*;
 
