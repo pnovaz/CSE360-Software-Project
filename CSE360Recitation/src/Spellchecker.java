@@ -209,6 +209,31 @@ public class Spellchecker {
 				list.setModel(convertToListModel(undocumentedWords));
 			}
 		});
+        
+        //HELP! GUI by Alexandra Gibson
+        btnHelp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0){
+                //When you click the Help button a message box will appear with help instructions
+                String text = "<html>HELP!<br> "
+                + "<b>Step 1: Dictionary File</b><br> "
+                + " Click the Dictionary File Button.<br>"
+                + "  Select a text file to open.<br><br>"
+                + "<b>Step 2: Input file</b><br> "
+                + " Click the Input File Button.<br> "
+                + " Select a text file to open.<br><br> "
+                + "<b>Add Word Button:</b><br> "
+                + " Adds selected word(s) from the Input file to the Dictionary file.<br><br> "
+                + "<b>Add All Words Button:</b><br> "
+                + " Adds all of the words from the Input file.<br><br> "
+                + "<b>Ignore Word Button:</b><br> "
+                + " Removes the selected word(s) from the input file. </html>";
+                JLabel message = new JLabel(text);
+                message.setFont(new Font("serif", Font.PLAIN, 14));
+                JOptionPane.showMessageDialog(null, message);
+                
+            }
+        });
+        
 	}	
 		
 	//By Petra and David
