@@ -37,19 +37,21 @@ public class Spellchecker {
 	//This method finds words that are in the set of words from the input file(s) 
 	//that are not in the set of words from the dictionary file(s)
 	public static void ListUnknownWords(HashSet<String> inputWords, HashSet<String> dictionary, HashSet<String> undocumentedWords){
-		//while iterating thru the inputWords set
-		for(String currentWord : inputWords){
-			//is the current word in the dictionary?
-			if(!dictionary.contains(currentWord)){
-				//if the current word is not in the dictionary
-				//add the word to the set of undocumented words
-				undocumentedWords.add(currentWord);
+		if (!dictionary.isEmpty()){
+			//while iterating thru the inputWords set
+			for(String currentWord : inputWords){
+				//is the current word in the dictionary?
+				if(!dictionary.contains(currentWord)){
+					//if the current word is not in the dictionary
+					//add the word to the set of undocumented words
+					undocumentedWords.add(currentWord);
+				}
 			}
+			//remove all the words in the inputWords set 
+			//so that the set is empty and ready for new words from another input file.
+			//This way the words that are already checked won't be checked again.
+			inputWords.clear();
 		}
-		//remove all the words in the inputWords set 
-		//so that the set is empty and ready for new words from another input file.
-		//This way the words that are already checked won't be checked again.
-		inputWords.clear();
 	}
 
 	//By David
@@ -237,12 +239,13 @@ public class Spellchecker {
            
                 //get selected value from list1 (inputted file)
                 
-                String selectedWord = list.getSelectedValue();
+                List<String> selectedWord = list.getSelectedValuesList();
                 
                 //place selected value into list2
-                dictionary.add(selectedWord);
-                
-               list2.setModel(convertToListModel(dictionary));
+                dictionary.addAll(selectedWord);
+                undocumentedWords.removeAll(selectedWord);
+                list.setModel(convertToListModel(undocumentedWords));
+                list2.setModel(convertToListModel(dictionary));
                 
                 dictionaryAlert.setText("Word Added!");
             }
