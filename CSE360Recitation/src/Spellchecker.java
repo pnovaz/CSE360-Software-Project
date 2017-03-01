@@ -198,6 +198,22 @@ public class Spellchecker {
 			}
 		});
         
+        //Add Word Button Action Listener
+        //Created by Petra
+        
+        btnAddWord.addActionListener(new ActionListener () {
+            public void actionPerformed(ActionEvent argo0){
+                
+                //get selected value from list1 (inputted file)
+                
+                String selectedWord = list.getSelectedValue();
+                
+                //place selected value into list2
+                dictionary.add(selectedWord);
+                list2.setModel(convertToListModel(dictionary));
+            }
+        });
+        
         //HELP! GUI by Alexandra Gibson
         btnHelp.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0){
@@ -248,10 +264,9 @@ public class Spellchecker {
 			        }
 			    } finally {
 			        br.close();
-			    }
-			}
-		}
-	}
+			    }}}
+			
+        }
 	
 	/**
 	 * Launch the application.
