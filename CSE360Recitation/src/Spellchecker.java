@@ -100,7 +100,7 @@ public class Spellchecker {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setForeground(Color.ORANGE);
-		frame.setBounds(100, 100, 552, 426);
+		frame.setBounds(100, 100, 552, 553);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -116,7 +116,7 @@ public class Spellchecker {
 		btnInputFile.setFont(new Font("Lucida Sans", Font.BOLD, 12));
 		btnInputFile.setForeground(Color.DARK_GRAY);
 		btnInputFile.setBackground(Color.BLACK);
-		btnInputFile.setBounds(45, 6, 117, 29);
+		btnInputFile.setBounds(45, 95, 117, 29);
 		frame.getContentPane().add(btnInputFile);
 		
 		JButton btnDictionaryFile = new JButton("Dictionary File");
@@ -126,30 +126,31 @@ public class Spellchecker {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnDictionaryFile.setBounds(261, 6, 117, 29);
+		btnDictionaryFile.setBounds(264, 95, 117, 29);
 		frame.getContentPane().add(btnDictionaryFile);
 		
 		JButton btnAddWord = new JButton("Add Word");
+		btnAddWord.setBackground(Color.GREEN);
 		btnAddWord.setForeground(Color.DARK_GRAY);
 		btnAddWord.setFont(new Font("Lucida Sans", Font.BOLD, 12));
-		btnAddWord.setBounds(416, 82, 117, 29);
+		btnAddWord.setBounds(429, 191, 117, 29);
 		frame.getContentPane().add(btnAddWord);
 		
 		JButton btnAddAllWords = new JButton("Add All Words");
 		btnAddAllWords.setForeground(Color.DARK_GRAY);
 		btnAddAllWords.setFont(new Font("Lucida Sans", Font.BOLD, 12));
-		btnAddAllWords.setBounds(416, 118, 117, 29);
+		btnAddAllWords.setBounds(429, 226, 117, 29);
 		frame.getContentPane().add(btnAddAllWords);
 		
 		JScrollPane scrollPane1 = new JScrollPane();
-		scrollPane1.setBounds(21, 47, 184, 280);
+		scrollPane1.setBounds(21, 133, 184, 280);
 		frame.getContentPane().add(scrollPane1);
 		
 		final JList <String> list = new JList<>();
 		scrollPane1.setViewportView(list);
 		
 		JScrollPane scrollPane2 = new JScrollPane();
-		scrollPane2.setBounds(230, 47, 184, 280);
+		scrollPane2.setBounds(233, 133, 184, 280);
 		frame.getContentPane().add(scrollPane2);
 		
 		final JList list2 = new JList();
@@ -161,11 +162,37 @@ public class Spellchecker {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnIgnore.setBounds(416, 149, 117, 29);
+		btnIgnore.setBounds(429, 262, 117, 29);
 		frame.getContentPane().add(btnIgnore);
 		
+		JPanel inputPanel = new JPanel();
+		inputPanel.setForeground(Color.RED);
+		inputPanel.setBackground(Color.WHITE);
+		inputPanel.setBounds(21, 441, 184, 29);
+		frame.getContentPane().add(inputPanel);
+		
+		JLabel inputAlert = new JLabel("");
+		inputAlert.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+		inputAlert.setHorizontalAlignment(SwingConstants.CENTER);
+		inputPanel.add(inputAlert);
+		
+		JPanel dictionaryPanel = new JPanel();
+		dictionaryPanel.setForeground(Color.RED);
+		dictionaryPanel.setBackground(Color.WHITE);
+		dictionaryPanel.setBounds(233, 445, 184, 25);
+		frame.getContentPane().add(dictionaryPanel);
+		
+		JLabel dictionaryAlert = new JLabel("");
+		dictionaryPanel.add(dictionaryAlert);
+		
+		JLabel header = new JLabel("The Amazing SpellChecker :)");
+		header.setForeground(Color.BLUE);
+		header.setFont(new Font("American Typewriter", Font.BOLD, 29));
+		header.setBounds(70, 24, 443, 37);
+		frame.getContentPane().add(header);
+		
 	
-	
+	//INPUT A FILE BUTTON IMPLEMENTATION
 		btnInputFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0){
 				
@@ -178,11 +205,11 @@ public class Spellchecker {
 				}
 				list2.setModel(convertToListModel(dictionary));
 				list.setModel(convertToListModel(undocumentedWords));
-			}
 			
+			inputAlert.setText("Input File added!");
 		
-		});
-		
+		}});
+		//add a dictionary file button implementation
 		btnDictionaryFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent argo0){
 				
@@ -195,22 +222,29 @@ public class Spellchecker {
 				}
 				list2.setModel(convertToListModel(dictionary));
 				list.setModel(convertToListModel(undocumentedWords));
+				
+				dictionaryAlert.setText("Dictionary Added!");
 			}
 		});
         
         //Add Word Button Action Listener
-        //Created by Petra
+        //Created by PETRA NOVAKOVIC
+		//adds both only one word or multiple words if the user chooses!
         
         btnAddWord.addActionListener(new ActionListener () {
             public void actionPerformed(ActionEvent argo0){
                 
+           
                 //get selected value from list1 (inputted file)
                 
                 String selectedWord = list.getSelectedValue();
                 
                 //place selected value into list2
                 dictionary.add(selectedWord);
-                list2.setModel(convertToListModel(dictionary));
+                
+               list2.setModel(convertToListModel(dictionary));
+                
+                dictionaryAlert.setText("Word Added!");
             }
         });
         
@@ -287,5 +321,4 @@ public class Spellchecker {
 			}
 		});
 	}
-
 }
