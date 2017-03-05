@@ -206,8 +206,9 @@ public class Spellchecker {
 				catch (Exception e){
 					e.printStackTrace();
 				}
-				list2.setModel(convertToListModel(dictionary));
 				list.setModel(convertToListModel(undocumentedWords));
+				list2.setModel(convertToListModel(dictionary));
+				
 			
 			inputAlert.setText("Input File added!");
 		
@@ -249,9 +250,41 @@ public class Spellchecker {
                 list.setModel(convertToListModel(undocumentedWords));
                 list2.setModel(convertToListModel(dictionary));
                 
-                dictionaryAlert.setText("Word Added!");
+                dictionaryAlert.setText(selectedWord.toString() + " added!");
             }
         });
+        
+        //Ignore Word Button Action Listener
+        //Created by PETRA NOVAKOVIC
+		//deletes word from the input files jlist
+        
+        btnIgnore.addActionListener(new ActionListener () {
+            public void actionPerformed(ActionEvent argo0){
+              
+                //get selected value from list1 (inputted file)
+             
+            	String selectedword = list.getSelectedValue();
+            	
+                int selectedIndex = list.getSelectedIndex();
+             
+                ((DefaultListModel) list.getModel()).remove(selectedIndex);
+                
+      	      
+      	      
+                //update and display current jlists after ignoring
+                undocumentedWords.remove(selectedword);
+                list.setModel(convertToListModel(undocumentedWords));
+                list2.setModel(convertToListModel(dictionary));
+                
+                inputAlert.setText(selectedword.toString() + " ignored!");
+            }
+             
+            	 
+            
+		
+        });
+        
+        
         
         //Add All Words Button Action Listener
         //Created by PETRA NOVAKOVIC
