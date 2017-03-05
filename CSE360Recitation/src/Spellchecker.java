@@ -97,6 +97,7 @@ public class Spellchecker {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * Created By Petra
 	 */
 	private void initialize(HashSet<String> inputWords, HashSet<String> dictionary, HashSet<String> undocumentedWords) {
 		frame = new JFrame();
@@ -211,6 +212,7 @@ public class Spellchecker {
 			inputAlert.setText("Input File added!");
 		
 		}});
+		
 		//add a dictionary file button implementation
 		btnDictionaryFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent argo0){
@@ -250,6 +252,43 @@ public class Spellchecker {
                 dictionaryAlert.setText("Word Added!");
             }
         });
+        
+        //Add All Words Button Action Listener
+        //Created by PETRA NOVAKOVIC
+		//selects all words in the input file jlist and adds to dictionary jlist
+        
+        btnAddAllWords.addActionListener(new ActionListener () {
+            
+            public void actionPerformed(ActionEvent argo0){
+                
+                //select all words currently in jlist by getting size of jlist
+       
+            	   int start = 0;
+          
+					int end = list.getModel().getSize() - 1;
+                
+            	    if (end >= 0) {
+            	    	
+            	    	//selects all elements in first jlist
+                        
+            	      list.addSelectionInterval(start, end);
+            	      
+            	      List <String> selectedWords = list.getSelectedValuesList();
+            	     
+          
+                //place all values into list2
+                dictionary.addAll(selectedWords);
+                        
+                undocumentedWords.removeAll(selectedWords);
+                        
+                list.setModel(convertToListModel(undocumentedWords));
+                        
+                list2.setModel(convertToListModel(dictionary));
+                
+                dictionaryAlert.setText("All Words Added!");
+            	    }}}
+            	    );
+        
         
         //HELP! GUI by Alexandra Gibson
         btnHelp.addActionListener(new ActionListener() {
