@@ -37,8 +37,8 @@ public class Spellchecker {
 	private static JFrame FRAME;
 	
 	/** 
-	 * @author David
 	 * Finds words that are in the set of words from the input file(s) that are not in the set of words from the dictionary file(s)
+	 * @author David
 	 * @param inputWords The hash set containing the words from the input file
 	 * @param dictionary The hash set containing the words from the dictionary file
 	 * @param undocumentedWords	The hash set containing the words in the input file but not in the dictionary. It is initially empty.
@@ -67,9 +67,8 @@ public class Spellchecker {
 	}
 	
 	/**
-	 * @author Daniel
-	 * 
 	 * Converts a HashSet to a ListModel in order to print to the JPanel
+	 * @author Daniel
 	 * @param setToConvert The hash set that will be converted to a List Model
 	 * @return A List Model data structure
 	 */
@@ -84,9 +83,8 @@ public class Spellchecker {
 	}
 	
 	/**
-	 * @author Daniel
-	 * 
 	 * Filters an input by removing numbers, white-spaces, and special
+	 * @author Daniel
 	 * @param inputText The text to be filtered
 	 * @return A string representing the filtered input text
 	 */
@@ -102,13 +100,13 @@ public class Spellchecker {
 	}
 	
 	/**
-	 * @author Petra
 	 * Initializes the contents of the frame.
+	 * @author Petra
 	 * @param inputWords The hash set containing the words from the input file
 	 * @param dictionary The hash set containing the words from the dictionary file
 	 * @param undocumentedWords	The hash set containing the words in the input file but not in the dictionary. It is initially empty.
 	 */
-	private static void initialize(HashSet<String> inputWords, HashSet<String> dictionary, HashSet<String> undocumentedWords) {
+	public static void initialize(HashSet<String> inputWords, HashSet<String> dictionary, HashSet<String> undocumentedWords) {
 		FRAME = new JFrame();
 		FRAME.getContentPane().setBackground(Color.ORANGE);
 		FRAME.getContentPane().setForeground(Color.ORANGE);
@@ -289,8 +287,8 @@ public class Spellchecker {
         });
         
         /**
+         * Selects all words in the input file JList and adds to dictionary JList
          * @author Petra
-         * Selects all words in the input file jlist and adds to dictionary jlist
          */
         addAllWordsButton.addActionListener(new ActionListener () {
             
@@ -321,8 +319,8 @@ public class Spellchecker {
         });
         
         /**
+         * HELP! GUI
          * @author Alexandra Gibson
-         * HELP! GUI 
          */
         helpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0){
@@ -352,9 +350,8 @@ public class Spellchecker {
 	}	
 		
 	/** 
-	 * @author Petra
 	 * Handles multiple file inputs and adds the contents of each file to the inputWords set
-	 * 
+	 * @author Petra
 	 * @param hashChooser A string that helps to determine whether or not filterText method should be used 
 	 * @param wordStorage TA hash set
 	 * @throws Exception Any type of exception that might be thrown
