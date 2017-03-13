@@ -2,9 +2,9 @@
  * CSE360 Project: a simple program that filters unknown words from a given file. 
  * 
  * @author todo: GroupName
- * @author Petra
- * @author Daniel
- * @author Ally
+ * @author Petra Novakovic
+ * @author Daniel Bakhshpour
+ * @author Alexandra Gibson
  * @author Olu David Gbadebo
  * 
  * @version 1.0
@@ -267,6 +267,7 @@ public class Spellchecker {
         
         /**
          * Button listener to delete word from the input files JList 
+         * @author Petra Novakovic
          */
         ignoreButton.addActionListener(new ActionListener () {
             public void actionPerformed(ActionEvent argo0){
@@ -288,7 +289,7 @@ public class Spellchecker {
         
         /**
          * Selects all words in the input file JList and adds to dictionary JList
-         * @author Petra
+         * @author Petra Novakovic
          */
         addAllWordsButton.addActionListener(new ActionListener () {
             
@@ -351,7 +352,7 @@ public class Spellchecker {
 		
 	/** 
 	 * Handles multiple file inputs and adds the contents of each file to the inputWords set
-	 * @author Petra
+	 * @author Petra Novakovic
 	 * @param hashChooser A string that helps to determine whether or not filterText method should be used 
 	 * @param wordStorage TA hash set
 	 * @throws Exception Any type of exception that might be thrown
