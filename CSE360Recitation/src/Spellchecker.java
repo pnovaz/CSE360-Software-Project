@@ -81,6 +81,9 @@ public class Spellchecker {
 		
 		return listModel;
 	}
+	//created by Petra; counts number of times button has been cliclked
+	  
+
 	
 	/**
 	 * Filters an input by removing numbers, white-spaces, and special
@@ -200,6 +203,14 @@ public class Spellchecker {
 		windowHeader.setFont(new Font("American Typewriter", Font.BOLD, 29));
 		windowHeader.setBounds(70, 24, 443, 37);
 		FRAME.getContentPane().add(windowHeader);
+		
+		JButton btnReplaceWord = new JButton("Replace Word");
+		btnReplaceWord.setBounds(429, 303, 117, 29);
+		FRAME.getContentPane().add(btnReplaceWord);
+		
+		JButton btnStatistics = new JButton("Statistics");
+		btnStatistics.setBounds(429, 155, 117, 29);
+		FRAME.getContentPane().add(btnStatistics);
 	
 		/**
 		 * Button listener for input file button
@@ -318,6 +329,51 @@ public class Spellchecker {
         	    }
             }
         });
+        
+     
+      //replace word button created by Petra  
+   btnReplaceWord.addActionListener(new ActionListener () {
+	   
+	   int replacementCounter = 0; //counts number of replacements
+            
+            public void actionPerformed(ActionEvent argo0){
+            	
+            	
+            	List<String> selectedWord = LEFTSCROLLPANECONTENT.getSelectedValuesList();
+            	JFrame frame = new JFrame("Input Dialogue");
+            	String replacement = JOptionPane.showInputDialog(frame, "What word will replace this selected word?");
+
+                // get the user's input. note that if they press Cancel, 'name' will be null
+                System.out.printf("The user's replacement is '%s'.\n", replacement);
+               
+                //select all words currently in jlist by getting size of jlist
+                
+                
+        		   //remove selected word and add replacement
+        		   dictionary.remove(selectedWord);  
+        		   undocumentedWords.removeAll(selectedWord);
+        		   inputWords.add(replacement);
+        		   undocumentedWords.add(replacement);
+	                        
+        		   LEFTSCROLLPANECONTENT.setModel(convertToListModel(undocumentedWords));
+        		   RIGHTSCROLLPANECONTENT.setModel(convertToListModel(dictionary));
+	       
+        		   inputAlert.setText(selectedWord.toString() + " replaced with " + replacement.toString());
+        		   replacementCounter++;
+        		   System.out.println(replacementCounter);
+        		 
+ 		   }
+         
+
+     	   
+   });
+   
+  
+   
+   //counts how many times the replace button has been pressed used to determine number of words replaced statistic
+
+ 
+           
         
         /**
          * HELP! GUI
