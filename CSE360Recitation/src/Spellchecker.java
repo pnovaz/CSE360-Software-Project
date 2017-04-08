@@ -332,37 +332,116 @@ public class Spellchecker {
         
      
       //replace word button created by Petra  
-   btnReplaceWord.addActionListener(new ActionListener () {
-	   
-	   int replacementCounter = 0; //counts number of replacements
-            
-            public void actionPerformed(ActionEvent argo0){
-            	
-            	
-            	List<String> selectedWord = LEFTSCROLLPANECONTENT.getSelectedValuesList();
-            	JFrame frame = new JFrame("Input Dialogue");
-            	String replacement = JOptionPane.showInputDialog(frame, "What word will replace this selected word?");
+        
+        //replace word button created by Petra  
+     btnReplaceWord.addActionListener(new ActionListener () {
+  	   
+  	   int replacementCounter = 0; //counts number of replacements
+              
+              public void actionPerformed(ActionEvent argo0){
+              	
+              	
+              	List<String> selectedWord = LEFTSCROLLPANECONTENT.getSelectedValuesList();
+              	JFrame frame = new JFrame("Input Dialogue");
+              	String replacement = JOptionPane.showInputDialog(frame, "What word will replace this selected word?");
 
-                // get the user's input. note that if they press Cancel, 'name' will be null
-                System.out.printf("The user's replacement is '%s'.\n", replacement);
-               
-                //select all words currently in jlist by getting size of jlist
-                
-                
-        		   //remove selected word and add replacement
-        		   dictionary.remove(selectedWord);  
-        		   undocumentedWords.removeAll(selectedWord);
-        		   inputWords.add(replacement);
-        		   undocumentedWords.add(replacement);
-	                        
-        		   LEFTSCROLLPANECONTENT.setModel(convertToListModel(undocumentedWords));
-        		   RIGHTSCROLLPANECONTENT.setModel(convertToListModel(dictionary));
-	       
-        		   inputAlert.setText(selectedWord.toString() + " replaced with " + replacement.toString());
-        		   replacementCounter++;
-        		   System.out.println(replacementCounter);
+                  // get the user's input. note that if they press Cancel, 'name' will be null
+                  System.out.printf("The user's replacement is '%s'.\n", replacement);
+                 
+                  //select all words currently in jlist by getting size of jlist
+                  
+                  
+          		   //remove selected word and add replacement
+          		   dictionary.remove(selectedWord);  
+          		   undocumentedWords.removeAll(selectedWord);
+          		   inputWords.add(replacement);
+          		   undocumentedWords.add(replacement);
+  	                        
+          		   LEFTSCROLLPANECONTENT.setModel(convertToListModel(undocumentedWords));
+          		   RIGHTSCROLLPANECONTENT.setModel(convertToListModel(dictionary));
+  	       
+          		   inputAlert.setText(selectedWord.toString().substring(1, selectedWord.toString().length()- 1) + " replaced with " + replacement.toString().trim());
+          		   replacementCounter++;
+          		   System.out.println(replacementCounter);
+          		   
+          		   try{
+          			   
+                		   File f = new File("src/input.txt"); //file in src folder, path of file to be modified
+                		   
+                		   String oldContent = "";
+                		   String selected = selectedWord.toString().substring(1, selectedWord.toString().length()- 1);
+                		   String replacementWord = replacement.toString();
+     
+                         
+                		   BufferedReader reader = new BufferedReader(new FileReader(f));
+                		   String line = "";
+                		   String oldText = "";
+            
+                           //read all lines of input.txt and append to oldContent String
+                      
+                           while ((line = reader.readLine()) != null) {
+                           	oldContent += line + "\r\n";
+                           	
+                           
+                           }
+                           
+                           reader.close();
+                           
+                           //replace all the occurences of oldString with newString using replace() method
+                           
+                          String newContent = oldContent.replaceAll(selected, replacementWord); //add replacement word to file
+                           
+                         
+                           
+                           //create FileWriter object to write newContent back into the input text fileToBeModified
+                           FileWriter writer = new FileWriter(f);
+                           
+                        
+                           
+                           //rewrite file with new content using write()
+                           
+                           writer.write(newContent);
+                           
+                           writer.close();
+                        }
+                        catch (IOException e) {
+                      	  e.printStackTrace();
+                   
+                        }
+                  }
+              //this function takes the undocumented words hash set and writes it to the input file
+              /*
+              public void updateInputFile() {
+           	   
+              	   try {
+              		
+           			BufferedWriter out = new BufferedWriter(new FileWriter("src/input.txt"));
+           		
+           			
+           			
+           			Iterator <String> it = undocumentedWords.iterator();
+           			
+           			
+           			
+           			while(it.hasNext()) {
+           				out.write(it.next() + "\n");
+           			}
+           			out.close();
+           			
+           		} catch (IOException e) {
+           			// TODO Auto-generated catch block
+           			e.printStackTrace();
+           		}        
+              */
+              //edit input.txt	
+           //this method updates the input file with the current input file displayed on the GUI
+
+            	   
+            	// replaces a selected word with a user entered word   
+              
+  
         		 
- 		   }
+ 		   
          
 
      	   
