@@ -81,9 +81,6 @@ public class Spellchecker {
 		
 		return listModel;
 	}
-	//created by Petra; counts number of times button has been cliclked
-	  
-
 	
 	/**
 	 * Filters an input by removing numbers, white-spaces, and special
@@ -108,17 +105,24 @@ public class Spellchecker {
 	 * @param inputWords The hash set containing the words from the input file
 	 * @param dictionary The hash set containing the words from the dictionary file
 	 * @param undocumentedWords	The hash set containing the words in the input file but not in the dictionary. It is initially empty.
+	 * @param statisticsTracker An array of integers representing the counters that track user's action. It has 5 element and each element represent the following: words replaced counter, number of words in input file, number of words added to the dictionary, number of lines read from the input file, number of words ignored. 
 	 */
-	public static void initialize(HashSet<String> inputWords, HashSet<String> dictionary, HashSet<String> undocumentedWords) {
+	public static void initialize(HashSet<String> inputWords, HashSet<String> dictionary, HashSet<String> undocumentedWords, int[] statisticsTracker) {
+		
+		/**
+		 * Frame helpers.
+		 */
 		FRAME = new JFrame();
 		FRAME.getContentPane().setBackground(Color.ORANGE);
 		FRAME.getContentPane().setForeground(Color.ORANGE);
 		FRAME.setBounds(100, 100, 552, 553);
 		FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		FRAME.getContentPane().setLayout(null);
+		//end frame helpers
 		
-	
-	
+		/**
+		 * Buttons implementation
+		 */
 		JButton helpButton = new JButton("Help");
 		helpButton.setForeground(Color.DARK_GRAY);
 		helpButton.setFont(new Font("Lucida Sans", Font.BOLD, 12));
@@ -155,6 +159,28 @@ public class Spellchecker {
 		addAllWordsButton.setBounds(429, 226, 117, 29);
 		FRAME.getContentPane().add(addAllWordsButton);
 		
+		JButton ignoreButton = new JButton("Ignore Word");
+		ignoreButton.setFont(new Font("Lucida Sans", Font.BOLD, 12));
+		ignoreButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		
+		ignoreButton.setBounds(429, 262, 117, 29);
+		FRAME.getContentPane().add(ignoreButton);
+		
+		JButton btnReplaceWord = new JButton("Replace Word");
+		btnReplaceWord.setBounds(429, 303, 117, 29);
+		FRAME.getContentPane().add(btnReplaceWord);
+		
+		JButton btnStatistics = new JButton("Statistics");
+		btnStatistics.setBounds(429, 155, 117, 29);
+		FRAME.getContentPane().add(btnStatistics);
+		//end Buttons implementation
+		
+		/**
+		 * Scroll panes initialization
+		 */
 		JScrollPane leftScrollPane = new JScrollPane();
 		leftScrollPane.setBounds(21, 133, 184, 280);
 		FRAME.getContentPane().add(leftScrollPane);
@@ -168,16 +194,11 @@ public class Spellchecker {
 		
 		final JList RIGHTSCROLLPANECONTENT = new JList();
 		rightScrollPane.setViewportView(RIGHTSCROLLPANECONTENT);
+		//end scroll panes initialization
 		
-		JButton ignoreButton = new JButton("Ignore Word");
-		ignoreButton.setFont(new Font("Lucida Sans", Font.BOLD, 12));
-		ignoreButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		ignoreButton.setBounds(429, 262, 117, 29);
-		FRAME.getContentPane().add(ignoreButton);
-		
+		/**
+		 * Alert panels implementation
+		 */
 		JPanel leftAlertPanel = new JPanel();
 		leftAlertPanel.setForeground(Color.RED);
 		leftAlertPanel.setBackground(Color.WHITE);
@@ -203,14 +224,6 @@ public class Spellchecker {
 		windowHeader.setFont(new Font("American Typewriter", Font.BOLD, 29));
 		windowHeader.setBounds(70, 24, 443, 37);
 		FRAME.getContentPane().add(windowHeader);
-		
-		JButton btnReplaceWord = new JButton("Replace Word");
-		btnReplaceWord.setBounds(429, 303, 117, 29);
-		FRAME.getContentPane().add(btnReplaceWord);
-		
-		JButton btnStatistics = new JButton("Statistics");
-		btnStatistics.setBounds(429, 155, 117, 29);
-		FRAME.getContentPane().add(btnStatistics);
 	
 		/**
 		 * Button listener for input file button
@@ -220,7 +233,11 @@ public class Spellchecker {
 			public void actionPerformed(ActionEvent arg0){
 				
 				try{
-					PickMe("input", inputWords);
+					resetTrackers(statisticsTracker);
+					
+					PickMe("input", inputWords, statisticsTracker);
+					//update tracker: number of words in the input file
+					statisticsTracker[1] = inputWords.size();
 					ListUnknownWords(inputWords, dictionary, undocumentedWords);
 				}
 				catch (Exception e){
@@ -241,7 +258,8 @@ public class Spellchecker {
 			public void actionPerformed(ActionEvent argo0){
 				
 				try{
-					PickMe("dict", dictionary);
+					resetTrackers(statisticsTracker);
+					PickMe("dict", dictionary, statisticsTracker);
 					ListUnknownWords(inputWords, dictionary, undocumentedWords);
 				}
 				catch (Exception e){
@@ -259,11 +277,12 @@ public class Spellchecker {
          */
         addWordButton.addActionListener(new ActionListener () {
             public void actionPerformed(ActionEvent argo0){
-                
-           
-                //get selected value from list1 (inputted file)
+                //get selected value from list1 (inputed file)
                 
                 List<String> selectedWord = LEFTSCROLLPANECONTENT.getSelectedValuesList();
+                
+                //update number of words added to dictionary
+                statisticsTracker[2] += selectedWord.size();
                 
                 //place selected value into list2
                 dictionary.addAll(selectedWord);
@@ -284,13 +303,17 @@ public class Spellchecker {
             public void actionPerformed(ActionEvent argo0){
               
                 //get selected value from list1 (inputted file)
-            	String selectedWord = LEFTSCROLLPANECONTENT.getSelectedValue();
+            	List<String> selectedWord = LEFTSCROLLPANECONTENT.getSelectedValuesList();
+            	
                 int selectedIndex = LEFTSCROLLPANECONTENT.getSelectedIndex();
              
-                ((DefaultListModel) LEFTSCROLLPANECONTENT.getModel()).remove(selectedIndex);
+                //((DefaultListModel) LEFTSCROLLPANECONTENT.getModel()).remove(selectedIndex);
+                
+                //update number of words ignored
+                statisticsTracker[4] = selectedWord.size();
                 
                 //update and display current jlists after ignoring
-                undocumentedWords.remove(selectedWord);
+                undocumentedWords.removeAll(selectedWord);
                 LEFTSCROLLPANECONTENT.setModel(convertToListModel(undocumentedWords));
                 RIGHTSCROLLPANECONTENT.setModel(convertToListModel(dictionary));
                 
@@ -318,6 +341,9 @@ public class Spellchecker {
         		   LEFTSCROLLPANECONTENT.addSelectionInterval(start, end);
         		   List <String> selectedWords = LEFTSCROLLPANECONTENT.getSelectedValuesList();
                     
+        		 //update number of words added to dictionary
+                   statisticsTracker[2] += selectedWords.size();
+                   
         		   //place all values into list2
         		   dictionary.addAll(selectedWords);        
         		   undocumentedWords.removeAll(selectedWords);
@@ -329,17 +355,14 @@ public class Spellchecker {
         	    }
             }
         });
-        
-     
-      //replace word button created by Petra  
-        
-        //replace word button created by Petra  
+       
+     /**
+      * Replace word button removes a selected word from the input, prompts user for a replacement and adds the replacement to the input file
+      * @author Petra Novakovic
+      */
      btnReplaceWord.addActionListener(new ActionListener () {
-  	   
-  	   int replacementCounter = 0; //counts number of replacements
-              
+  	  
               public void actionPerformed(ActionEvent argo0){
-              	
               	
               	List<String> selectedWord = LEFTSCROLLPANECONTENT.getSelectedValuesList();
               	JFrame frame = new JFrame("Input Dialogue");
@@ -348,12 +371,11 @@ public class Spellchecker {
                   // get the user's input. note that if they press Cancel, 'name' will be null
                   System.out.printf("The user's replacement is '%s'.\n", replacement);
                  
-                  //select all words currently in jlist by getting size of jlist
-                  
-                  
           		   //remove selected word and add replacement
+                  
           		   dictionary.remove(selectedWord);  
           		   undocumentedWords.removeAll(selectedWord);
+          		   inputWords.remove(selectedWord);
           		   inputWords.add(replacement);
           		   undocumentedWords.add(replacement);
   	                        
@@ -361,100 +383,74 @@ public class Spellchecker {
           		   RIGHTSCROLLPANECONTENT.setModel(convertToListModel(dictionary));
   	       
           		   inputAlert.setText(selectedWord.toString().substring(1, selectedWord.toString().length()- 1) + " replaced with " + replacement.toString().trim());
-          		   replacementCounter++;
-          		   System.out.println(replacementCounter);
+          		   statisticsTracker[0]++;
+          		   System.out.println(statisticsTracker[0]);
           		   
           		   try{
-          			   
-                		   File f = new File("src/input.txt"); //file in src folder, path of file to be modified
-                		   
-                		   String oldContent = "";
-                		   String selected = selectedWord.toString().substring(1, selectedWord.toString().length()- 1);
-                		   String replacementWord = replacement.toString();
-     
-                         
-                		   BufferedReader reader = new BufferedReader(new FileReader(f));
-                		   String line = "";
-                		   String oldText = "";
-            
-                           //read all lines of input.txt and append to oldContent String
-                      
-                           while ((line = reader.readLine()) != null) {
-                           	oldContent += line + "\r\n";
-                           	
-                           
-                           }
-                           
-                           reader.close();
-                           
-                           //replace all the occurences of oldString with newString using replace() method
-                           
-                          String newContent = oldContent.replaceAll(selected, replacementWord); //add replacement word to file
-                           
-                         
-                           
-                           //create FileWriter object to write newContent back into the input text fileToBeModified
-                           FileWriter writer = new FileWriter(f);
-                           
-                        
-                           
-                           //rewrite file with new content using write()
-                           
-                           writer.write(newContent);
-                           
-                           writer.close();
-                        }
-                        catch (IOException e) {
-                      	  e.printStackTrace();
-                   
-                        }
-                  }
-              //this function takes the undocumented words hash set and writes it to the input file
-              /*
-              public void updateInputFile() {
-           	   
-              	   try {
-              		
-           			BufferedWriter out = new BufferedWriter(new FileWriter("src/input.txt"));
-           		
-           			
-           			
-           			Iterator <String> it = undocumentedWords.iterator();
-           			
-           			
-           			
-           			while(it.hasNext()) {
-           				out.write(it.next() + "\n");
-           			}
-           			out.close();
-           			
-           		} catch (IOException e) {
-           			// TODO Auto-generated catch block
-           			e.printStackTrace();
-           		}        
-              */
-              //edit input.txt	
-           //this method updates the input file with the current input file displayed on the GUI
-
-            	   
-            	// replaces a selected word with a user entered word   
-              
-  
-        		 
- 		   
-         
-
-     	   
+	        		   File fileInput = new File("src/input.txt"); //file in src folder, path of file to be modified
+	        		   
+	        		   String oldContent = "";
+            		   String selected = selectedWord.toString().substring(1, selectedWord.toString().length()- 1);
+            		   String replacementWord = replacement.toString();
+ 
+                     
+            		   BufferedReader reader = new BufferedReader(new FileReader(fileInput));
+            		   String line = "";
+	        		   String oldText = "";
+	    
+	                   //read all lines of input.txt and append to oldContent String
+	              
+	                   while ((line = reader.readLine()) != null) {
+	                   	oldContent += line + "\r\n";
+	                   }
+	                   
+	                   reader.close();
+	                   
+	                   //replace all the occurences of oldString with newString using replace() method
+	                   
+	                  String newContent = oldContent.replaceAll(selected, replacementWord); //add replacement word to file
+	                  
+	                  //create FileWriter object to write newContent back into the input text fileToBeModified
+	                  FileWriter writer = new FileWriter(fileInput);
+	                  
+	                  //rewrite file with new content using write()
+	                   
+	                   writer.write(newContent);
+	                   
+	                   writer.close();
+	                }
+          		   catch (IOException e) {
+	              	  e.printStackTrace();
+          		   }
+              }
    });
    
-  
+     /**
+      * Statistics button writes the statistics (user's actions) to a statistics file
+      * @author Olu Gbadebo
+      */
+  btnStatistics.addActionListener(new ActionListener() {
+		
+		public void actionPerformed(ActionEvent arg0){
+			try {
+				File statsFile = new File("src/statistics.txt");
+				FileWriter writer = new FileWriter(statsFile);
+				String output = "Number of words replaced: " + statisticsTracker[0] + "\n" +
+						"Number of words in input file: " + statisticsTracker[1] + "\n" +
+						"Number of words added to the dictionary: " + statisticsTracker[2] + "\n" + 
+						"Number of lines read from the input file: " +statisticsTracker[3] + "\n" +
+						"number of words ignored: " + statisticsTracker[4];
+				
+				writer.write(output);
+				writer.close();
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+  });
    
-   //counts how many times the replace button has been pressed used to determine number of words replaced statistic
-
- 
-           
-        
-        /**
+  		/**
          * HELP! GUI
          * @author Alexandra Gibson
          */
@@ -492,7 +488,7 @@ public class Spellchecker {
 	 * @param wordStorage TA hash set
 	 * @throws Exception Any type of exception that might be thrown
 	 */
-	public static void PickMe(String hashChooser, HashSet<String> wordStorage) throws Exception{
+	public static void PickMe(String hashChooser, HashSet<String> wordStorage, int[] statisticsTracker) throws Exception{
 		
 		fileChooser.setMultiSelectionEnabled(true);
 		
@@ -502,29 +498,51 @@ public class Spellchecker {
 			//gets multiple files
 			File[] files = fileChooser.getSelectedFiles();
 			
-			for(int i = 0; i < files.length; i++){
-				
-				final BufferedReader TEMPORARYREADER = new BufferedReader(new FileReader(files[i]));
-			    
-				try {
-			        String readInputLine;
-			        
-			        while ((readInputLine = TEMPORARYREADER.readLine()) != null) {
-			        	
-			        	if (hashChooser == "input"){
-			        		wordStorage.add(filterText(readInputLine));
-			        	}
-			        	else {
-			        		wordStorage.add(readInputLine);
-			        	}
-			        	
-			        }
-			        
-			    } finally {
-			        TEMPORARYREADER.close();
-			    }
-			    
+			if (hashChooser == "input") {
+				for(int i = 0; i < files.length; i++){
+					
+					final BufferedReader TEMPORARYREADER = new BufferedReader(new FileReader(files[i]));
+				    
+					try {
+				        String readInputLine;
+				        
+				        while ((readInputLine = TEMPORARYREADER.readLine()) != null) {
+				        	statisticsTracker[3]++;
+				        	wordStorage.add(filterText(readInputLine));
+				        }				        
+				    } finally {
+				        TEMPORARYREADER.close();
+				    }
+				    
+				}
 			}
+			else {
+				for(int i = 0; i < files.length; i++){
+					
+					final BufferedReader TEMPORARYREADER = new BufferedReader(new FileReader(files[i]));
+				    
+					try {
+				        String readInputLine;
+				        
+				        while ((readInputLine = TEMPORARYREADER.readLine()) != null) {
+				        	wordStorage.add(readInputLine);
+				        }				        
+				    } finally {
+				        TEMPORARYREADER.close();
+				    }
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Resets all the statistics tracker to zero
+	 * @author Olu Gbadebo
+	 * @param statisticsTracker
+	 */
+	public static void resetTrackers(int[] statisticsTracker){
+		for (int key : statisticsTracker){
+			key = 0;
 		}
 	}
 	
@@ -535,12 +553,15 @@ public class Spellchecker {
 		HashSet<String> inputWords = new HashSet<String>();
 		HashSet<String> dictionary = new HashSet<String>();
 		HashSet<String> undocumentedWords = new HashSet<String>();
+		int[] statisticsTracker = new int[5];
+		
+		resetTrackers(statisticsTracker);
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				
 				try {
-					initialize(inputWords, dictionary, undocumentedWords);
+					initialize(inputWords, dictionary, undocumentedWords, statisticsTracker);
 					FRAME.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
