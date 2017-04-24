@@ -486,6 +486,7 @@ public class Spellchecker {
 	 * @author Petra Novakovic
 	 * @param hashChooser A string that helps to determine whether or not filterText method should be used 
 	 * @param wordStorage TA hash set
+	 * @param statisticsTracker An array of integers representing the counters that track user's action. It has 5 element and each element represent the following: words replaced counter, number of words in input file, number of words added to the dictionary, number of lines read from the input file, number of words ignored.
 	 * @throws Exception Any type of exception that might be thrown
 	 */
 	public static void PickMe(String hashChooser, HashSet<String> wordStorage, int[] statisticsTracker) throws Exception{
@@ -538,7 +539,7 @@ public class Spellchecker {
 	/**
 	 * Resets all the statistics tracker to zero
 	 * @author Olu Gbadebo
-	 * @param statisticsTracker
+	 * @param statisticsTracker An array of integers representing the counters that track user's action. It has 5 element and each element represent the following: words replaced counter, number of words in input file, number of words added to the dictionary, number of lines read from the input file, number of words ignored.
 	 */
 	public static void resetTrackers(int[] statisticsTracker){
 		for (int key : statisticsTracker){
