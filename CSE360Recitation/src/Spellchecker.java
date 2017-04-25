@@ -443,6 +443,8 @@ public class Spellchecker {
 				
 				writer.write(output);
 				writer.close();
+				
+				dictionaryAlert.setText("Stats file created!");
 			}
 			catch(IOException e){
 				e.printStackTrace();
