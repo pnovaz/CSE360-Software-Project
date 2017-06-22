@@ -1,5 +1,0 @@
-Number of words replaced: 6
-Number of words in input file: 7
-Number of words added to the dictionary: 1
-Number of lines read from the input file: 23
-number of words ignored: 0
